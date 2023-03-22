@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -19,6 +20,7 @@ public class UserDto {
     @Size(min = 4, message = "UserName must be minimum of 4 characters !!")
     private String name;
     @Pattern(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\\.[a-z]{2,3}", message = "Email address is not valid !!")
+    @Column(unique = true)
     private String email;
     @NotEmpty
     @Size(min = 5, max = 16, message = "Password must be minimum of 5 characters and maximum of 16 characters !!")
