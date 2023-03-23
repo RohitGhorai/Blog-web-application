@@ -1,11 +1,13 @@
 package com.example.bloggingapplication.controllers;
 
+import com.example.bloggingapplication.entities.User;
 import com.example.bloggingapplication.exceptions.ApiException;
 import com.example.bloggingapplication.payloads.JwtAuthenticationRequest;
 import com.example.bloggingapplication.payloads.JwtAuthenticationResponse;
 import com.example.bloggingapplication.payloads.UserDto;
 import com.example.bloggingapplication.security.JwtTokenHelper;
 import com.example.bloggingapplication.services.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +21,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {
     @Autowired
     private JwtTokenHelper jwtTokenHelper;
+    @Autowired
+    private ModelMapper modelMapper;
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
@@ -37,6 +43,7 @@ public class AuthenticationController {
         String token = this.jwtTokenHelper.generateToken(userDetails);
         JwtAuthenticationResponse response = new JwtAuthenticationResponse();
         response.setToken(token);
+        response.setUser(this.modelMapper.map((User)userDetails, UserDto.class));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -49,7 +56,7 @@ public class AuthenticationController {
         }
     }
     @PostMapping("/register")
-    public ResponseEntity<UserDto> register(@RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> register(@Valid @RequestBody UserDto userDto){
         UserDto registerUser = this.userService.registerNewUser(userDto);
         return new ResponseEntity<>(registerUser, HttpStatus.CREATED);
     }
