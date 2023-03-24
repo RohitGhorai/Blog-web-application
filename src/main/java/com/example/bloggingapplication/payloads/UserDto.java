@@ -1,6 +1,7 @@
 package com.example.bloggingapplication.payloads;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,5 +41,9 @@ public class UserDto {
     @JsonIgnore
     public String getPassword(){
         return  this.password;
+    }
+    @JsonProperty
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
