@@ -82,7 +82,7 @@ public class PostController {
         PostDto updatePost = this.postService.updatePost(postDto, postId);
         return new ResponseEntity<>(updatePost, HttpStatus.OK);
     }
-    @GetMapping(value = "/profiles/{imageName}", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "/post/image/{imageName}", produces = MediaType.IMAGE_JPEG_VALUE)
     public void downloadImage(@PathVariable("imageName") String imageName, HttpServletResponse response) throws IOException {
         InputStream resource = this.fileService.getResource(path, imageName);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
