@@ -36,7 +36,7 @@ public class PostController {
         PostDto createPost = this.postService.createPost(postDto, categoryId, userId);
         return new ResponseEntity<>(createPost, HttpStatus.CREATED);
     }
-    @PutMapping("/user/{userId}/posts/{postId}")
+    @PutMapping("/posts/{postId}")
     public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable Integer postId){
         PostDto updatePost = this.postService.updatePost(postDto, postId);
         return new ResponseEntity<>(updatePost, HttpStatus.OK);
@@ -56,7 +56,7 @@ public class PostController {
         PostDto getPostById = this.postService.getPostByPostId(postId);
         return new ResponseEntity<>(getPostById, HttpStatus.OK);
     }
-    @DeleteMapping("/user/{userId}/posts/{postId}")
+    @DeleteMapping("/posts/{postId}")
     public ResponseEntity<ApiResponse> deletePost(@PathVariable Integer postId){
         this.postService.deletePost(postId);
         return new ResponseEntity<>(new ApiResponse("Post deleted successfully !!", true),HttpStatus.OK);
